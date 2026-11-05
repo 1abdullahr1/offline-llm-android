@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">EdgeLLM Offline</string>
+    <string name="tab_chat">Chat</string>
+    <string name="tab_models">Models</string>
+    <string name="tab_diagnostics">Diagnostics</string>
+
+    <string name="chat_input_hint">Type a message to the local model...</string>
+    <string name="send">Send</string>
+    <string name="stop">Stop</string>
+    <string name="clear_chat">Clear Chat</string>
+    <string name="no_messages">No messages yet. Select a model and start chatting completely offline.</string>
+    <string name="no_models_found">No local GGUF models found in app storage. Import a model below or copy to app storage.</string>
+    <string name="import_model">Import Model File (.gguf)</string>
+    <string name="active_model">Active Model</string>
+    <string name="no_active_model">No model loaded</string>
+    <string name="model_loaded_successfully">Model initialized successfully</string>
+    <string name="model_failed_load">Failed to initialize model</string>
+    <string name="generating">Generating response...</string>
+    <string name="metrics_format">Speed: %.1f tok/s | TTFT: %d ms | Context: %d tokens</string>
+    <string name="ram_usage_format">App RAM: %s | System Free: %s</string>
+    <string name="thermal_status_format">Thermal Status: %s</string>
+    <string name="active_threads_format">Inference Threads: %d (Performance Cores)</string>
+    <string name="mmap_enabled">Zero-Copy mmap: Enabled</string>
+    <string name="kv_cache_quant">KV Cache: Q8_0 Quantized</string>
+</resources>

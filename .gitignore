@@ -1,0 +1,26 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+*.apk
+*.aab
+
+# Built files
+app/build/
+build/
+
+# Do not commit the extracted LibreTube reference folder (150MB)
+LibreTube-master/
+scratch/
+initialData.json
+all_playlists.json
+vu_courses_playlists.json
+output_desktop/
+output_android/
+desktop/target/
