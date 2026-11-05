@@ -23,4 +23,7 @@
     <color name="chip_background">#334155</color>
     <color name="chip_text">#F1F5F9</color>
     <color name="card_stroke">#334155</color>
+    <color name="ic_launcher_background">#0F172A</color>
+    <color name="shortcut_color">#1D4ED8</color>
+    <color name="secondaryContainer">#1E293B</color>
 </resources>
