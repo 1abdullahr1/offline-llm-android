@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="nav_active_indicator">@color/nav_active_indicator_dark</color>
-    <color name="chip_background">@color/dark_chip_background</color>
-    <color name="chip_text">@color/dark_chip_text</color>
-    <color name="card_stroke">@color/card_stroke_dark</color>
-</resources>

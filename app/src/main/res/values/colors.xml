@@ -18,4 +18,9 @@
     <color name="user_bubble">#1D4ED8</color>
     <color name="assistant_bubble">#1E293B</color>
     <color name="divider_color">#334155</color>
+
+    <color name="nav_active_indicator">#1D4ED8</color>
+    <color name="chip_background">#334155</color>
+    <color name="chip_text">#F1F5F9</color>
+    <color name="card_stroke">#334155</color>
 </resources>

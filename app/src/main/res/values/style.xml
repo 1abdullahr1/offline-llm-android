@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ShapeAppearance.Fitrah.MicroImage" parent="ShapeAppearance.Material3.Corner.Medium">
-        <item name="cornerSize">14dp</item>
-    </style>
-
-    <style name="RoundedImageView">
+    <style name="RoundedCard">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12dp</item>
-    </style>
-
-    <style name="CircleImageView">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
-    <style name="SectionHeader">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
-        <item name="android:paddingHorizontal">16dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">8dp</item>
     </style>
 </resources>
