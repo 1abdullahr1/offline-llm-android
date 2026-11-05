@@ -16,8 +16,8 @@
     <string name="model_loaded_successfully">Model initialized successfully</string>
     <string name="model_failed_load">Failed to initialize model</string>
     <string name="generating">Generating response...</string>
-    <string name="metrics_format">Speed: %.1f tok/s | TTFT: %d ms | Context: %d tokens</string>
-    <string name="ram_usage_format">App RAM: %s | System Free: %s</string>
+    <string name="metrics_format">Speed: %1$.1f tok/s | TTFT: %2$d ms | Context: %3$d tokens</string>
+    <string name="ram_usage_format">App RAM: %1$s | System Free: %2$s</string>
     <string name="thermal_status_format">Thermal Status: %s</string>
     <string name="active_threads_format">Inference Threads: %d (Performance Cores)</string>
     <string name="mmap_enabled">Zero-Copy mmap: Enabled</string>
