@@ -29,28 +29,76 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Offline GGUF Model Manager"
+                android:text="Over-The-Air Model Hub"
                 android:textColor="@color/on_surface"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvStoragePath"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Path: /data/user/0/com.offline.llm/files/models"
+                android:layout_marginTop="2dp"
+                android:text="Download curated GGUF models directly or import from phone storage."
                 android:textColor="@color/on_surface_muted"
                 android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/btnImportModel"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="@color/primary"
-                android:text="@string/import_model"
-                android:textColor="@color/on_primary" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnToggleCustomUrl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/secondary"
+                    android:text="Custom URL"
+                    android:textColor="@color/on_primary" />
+
+                <Button
+                    android:id="@+id/btnImportModel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/surface_variant"
+                    android:text="Import File"
+                    android:textColor="@color/on_surface" />
+            </LinearLayout>
+
+            <!-- Custom URL Input (Hidden by default) -->
+            <LinearLayout
+                android:id="@+id/layoutCustomUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/etCustomModelUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_search_input"
+                    android:hint="Paste Hugging Face .gguf direct URL..."
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:textColor="@color/on_surface"
+                    android:textColorHint="@color/on_surface_muted"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnStartCustomDownload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/accent_green"
+                    android:text="Start Download"
+                    android:textColor="@color/on_primary" />
+            </LinearLayout>
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -64,6 +112,7 @@
         android:text="@string/no_models_found"
         android:textColor="@color/on_surface_muted"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

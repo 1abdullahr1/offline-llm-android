@@ -2,10 +2,16 @@ package com.offline.llm.data.model
 
 data class ModelInfo(
     val name: String,
+    val fileName: String,
     val filePath: String,
     val fileSizeBytes: Long,
     val quantization: String,
     val estimatedRamMb: Int,
+    val downloadUrl: String? = null,
+    val description: String = "",
+    val isDownloaded: Boolean = false,
+    val isDownloading: Boolean = false,
+    val downloadProgress: Int = 0,
     val isDefault: Boolean = false
 ) {
     val formattedSize: String

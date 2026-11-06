@@ -197,19 +197,34 @@ class NativeLlmBridge(
     }
 
     private fun generateSimulatedTokens(prompt: String): List<String> {
-        val query = prompt.lowercase()
+        val lastUserMessage = when {
+            prompt.contains("<|im_start|>user\n") -> prompt.substringAfterLast("<|im_start|>user\n").substringBefore("<|im_end|>").trim()
+            prompt.contains("<|start_header_id|>user<|end_header_id|>\n\n") -> prompt.substringAfterLast("<|start_header_id|>user<|end_header_id|>\n\n").substringBefore("<|eot_id|>").trim()
+            prompt.contains("<start_of_turn>user\n") -> prompt.substringAfterLast("<start_of_turn>user\n").substringBefore("<end_of_turn>").trim()
+            else -> prompt.trim()
+        }.lowercase()
+
         return when {
-            query.contains("offline") || query.contains("local") -> {
-                "Running 100% locally on-device. Zero data is sent to external servers. Memory mapped using POSIX mmap with Q8_0 quantized KV cache for safe mobile execution.".split(" ")
+            lastUserMessage.contains("name") -> {
+                "You haven't told me your name yet! You can tell me, and since conversation history is kept in our local database, I will remember it.".split(" ")
             }
-            query.contains("hello") || query.contains("hi") -> {
-                "Hello. I am running directly on your phone's processor using offline edge inference. How can I assist you today?".split(" ")
+            lastUserMessage.contains("hello") || lastUserMessage.contains("hi") || lastUserMessage.contains("hey") -> {
+                "Hello! I am EdgeLLM running completely offline on your device processor. How can I help you today?".split(" ")
             }
-            query.contains("speed") || query.contains("performance") -> {
-                "Inference threads are bound strictly to your SoC's performance cores, avoiding efficiency core lockstep delays. Thermal monitoring is active to prevent clock throttling.".split(" ")
+            lastUserMessage.contains("who are you") || lastUserMessage.contains("what are you") -> {
+                "I am EdgeLLM, a private on-device AI assistant. I run locally on your phone hardware using zero-copy mmap and quantized inference.".split(" ")
+            }
+            lastUserMessage.contains("speed") || lastUserMessage.contains("performance") -> {
+                "My inference threads are pinned directly to your SoC performance cores, sustaining steady tokens/sec with active thermal throttling protection.".split(" ")
+            }
+            lastUserMessage.contains("offline") || lastUserMessage.contains("internet") -> {
+                "I operate 100% offline with zero network connectivity. All weights, memory, and chats remain strictly local on your phone storage.".split(" ")
+            }
+            lastUserMessage.contains("code") || lastUserMessage.contains("kotlin") || lastUserMessage.contains("python") -> {
+                "I can help you write, debug, and understand code completely on-device without leaking code to cloud services.".split(" ")
             }
             else -> {
-                "I am processing your query completely offline on this device. Using zero-copy mmap, the model weights are loaded directly without heap overflow risks.".split(" ")
+                "I have processed your query locally on this device. The model is running via zero-copy mmap with Q8_0 quantized KV cache for memory safety.".split(" ")
             }
         }
     }

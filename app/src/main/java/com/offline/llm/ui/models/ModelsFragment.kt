@@ -59,11 +59,31 @@ class ModelsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvStoragePath.text = "Path: ${modelsViewModel.storageDirectoryPath}"
-
-        modelAdapter = ModelAdapter { selectedModel ->
-            loadSelectedModel(selectedModel)
-        }
+        modelAdapter = ModelAdapter(
+            onSelectModel = { selectedModel ->
+                loadSelectedModel(selectedModel)
+            },
+            onDownloadModel = { modelToDownload ->
+                modelsViewModel.startDownload(modelToDownload) { success, errorMsg ->
+                    if (success) {
+                        Toast.makeText(requireContext(), "Download complete: ${modelToDownload.name}", Toast.LENGTH_SHORT).show()
+                    } else if (errorMsg != null) {
+                        Toast.makeText(requireContext(), "Download error: $errorMsg", Toast.LENGTH_LONG).show()
+                    }
+                }
+            },
+            onCancelDownload = {
+                modelsViewModel.cancelDownload()
+                Toast.makeText(requireContext(), "Download cancelled", Toast.LENGTH_SHORT).show()
+            },
+            onDeleteModel = { modelToDelete ->
+                modelsViewModel.deleteModel(modelToDelete) { deleted ->
+                    if (deleted) {
+                        Toast.makeText(requireContext(), "Deleted ${modelToDelete.name}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        )
 
         binding.rvModels.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -73,6 +93,28 @@ class ModelsFragment : Fragment() {
 
         binding.btnImportModel.setOnClickListener {
             filePickerLauncher.launch(arrayOf("*/*"))
+        }
+
+        binding.btnToggleCustomUrl.setOnClickListener {
+            val isVisible = binding.layoutCustomUrl.visibility == View.VISIBLE
+            binding.layoutCustomUrl.visibility = if (isVisible) View.GONE else View.VISIBLE
+        }
+
+        binding.btnStartCustomDownload.setOnClickListener {
+            val url = binding.etCustomModelUrl.text.toString()
+            if (url.isNotBlank()) {
+                modelsViewModel.startDownloadFromCustomUrl(url) { success, errorMsg ->
+                    if (success) {
+                        binding.etCustomModelUrl.text.clear()
+                        binding.layoutCustomUrl.visibility = View.GONE
+                        Toast.makeText(requireContext(), "Custom model downloaded successfully", Toast.LENGTH_SHORT).show()
+                    } else if (errorMsg != null) {
+                        Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_LONG).show()
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Please enter a model URL", Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -88,7 +130,7 @@ class ModelsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             chatViewModel.activeModelName.collectLatest { name ->
-                val current = modelsViewModel.models.value.find { it.name == name }
+                val current = modelsViewModel.models.value.find { it.name == name || it.fileName == name }
                 modelAdapter.setActiveModelPath(current?.filePath)
             }
         }
